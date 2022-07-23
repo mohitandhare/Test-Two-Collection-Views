@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zR9-bB-TMh">
-                                <rect key="frame" x="10" y="88" width="394" height="774"/>
+                                <rect key="frame" x="10" y="88" width="394" height="626"/>
                                 <color key="backgroundColor" red="0.17166277769999999" green="0.17541572450000001" blue="0.2124480903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="774" id="eE2-rT-8wO"/>
+                                    <constraint firstAttribute="height" constant="626" id="eE2-rT-8wO"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lYG-zj-tg3">
                                     <size key="itemSize" width="128" height="128"/>
@@ -131,12 +131,35 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="BMl-Ey-i3C"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6lg-5P-ZuY" customClass="NeumorphismButton" customModule="NeumorphismKit">
+                                <rect key="frame" x="100" y="764" width="214" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Qhb-VH-e2W"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Send" cornerStyle="medium">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" red="0.15413523000000001" green="0.15833718729999999" blue="0.1908340942" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                        <color key="value" red="0.31529244779999999" green="0.7226859927" blue="0.64271259309999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="send_button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OzW-Pg-7A4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.17166277769999999" green="0.17541572450000001" blue="0.2124480903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6lg-5P-ZuY" secondAttribute="trailing" constant="100" id="57f-vA-hia"/>
                             <constraint firstItem="zR9-bB-TMh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9at-O1-6bh"/>
+                            <constraint firstItem="6lg-5P-ZuY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="D9f-WJ-2Dt"/>
                             <constraint firstItem="zR9-bB-TMh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="TsK-hk-bPw"/>
+                            <constraint firstItem="6lg-5P-ZuY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zlj-w1-rlH"/>
+                            <constraint firstItem="6lg-5P-ZuY" firstAttribute="top" secondItem="zR9-bB-TMh" secondAttribute="bottom" constant="50" id="dD7-Me-XJi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zR9-bB-TMh" secondAttribute="trailing" constant="10" id="me2-Wl-mxe"/>
                         </constraints>
                     </view>

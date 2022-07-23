@@ -11,15 +11,11 @@ import Alamofire
 import CoreData
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-   
+    
     var managedObjextContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
     @IBOutlet weak var OnecollectionView: UICollectionView!
-    
-    let one_array = ["1","2","3","4"]
-    
-    var light_value = ["1","0","1","0"]
     
     var device_state_list_load = [DeviceState]()
     
@@ -36,25 +32,130 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var final_array = [String]()
     
+    
+    
+    
+    
+    
+    var array = [String]()
+    var value = "000000"
+    var refresher: UIRefreshControl!
+    
+    var timer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
         
+//        timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
+//
+//            self.final_array.removeAll()
+//            self.array.removeAll()
+//            self.l_state_array.removeAll()
+//            self.master_array.removeAll()
+//            self.dest_button_array.removeAll()
+//            self.final_array.removeAll(keepingCapacity: true)
+//
+//
+//            if self.value == "111111" {
+//
+//                self.value = "000000"
+//                self.Post_Device_State()
+//                self.Get_device_state()
+//                self.OnecollectionView.reloadData()
+//
+//            }
+//
+//            else if self.value == "000000" {
+//
+//                self.value = "111111"
+//                self.Post_Device_State()
+//
+//                self.Get_device_state()
+//                self.OnecollectionView.reloadData()
+//
+//            }
+//
+//           }
         
         Get_device_state()
         
         OnecollectionView.delegate = self
         OnecollectionView.dataSource = self
         OnecollectionView.reloadData()
+      
+        
+    }
+   
+    
+    
+    @IBAction func send_button(_ sender: NeumorphismButton) {
         
         
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(RefreshButton))
+        final_array.removeAll()
+        array.removeAll()
+        l_state_array.removeAll()
+        master_array.removeAll()
+        dest_button_array.removeAll()
+        final_array.removeAll(keepingCapacity: true)
         
+        
+        if value == "111111" {
+        
+            value = "000000"
+            Post_Device_State()
+            Get_device_state()
+            OnecollectionView.reloadData()
+        
+        }
+        
+        else if value == "000000" {
+            
+            value = "111111"
+            Post_Device_State()
+            
+            Get_device_state()
+            OnecollectionView.reloadData()
+            
+        }
+//
+//            final_array.removeAll()
+//            array.removeAll()
+//
+//            value = "000000"
+//
+//            Post_Device_State()
+//
+//
+//
+//            Get_device_state()
+//            OnecollectionView.reloadData()
+//
+//
+//
+//            print(value)
+//        }
+//
+//        else if value == "000000" {
+//
+//            final_array.removeAll()
+//            array.removeAll()
+//
+//            value = "111111"
+//            Post_Device_State()
+//
+//            Get_device_state()
+//            OnecollectionView.reloadData()
+//
+//            print(value)
+//        }
         
         
     }
+    
+    
     
     @objc func RefreshButton() {
         Get_device_state()
@@ -98,7 +199,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let request = DeviceState.fetchRequest()
         
         do {
-        
+            
             device_state_list_load = try managedObjextContext.fetch(request)
             
             
@@ -116,8 +217,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
         }
     }
-
-
+    
+    
 }
 
 
@@ -146,7 +247,7 @@ extension ViewController {
                         
                         let parseJson = jsonOne,
                         let result = parseJson["result"] as? NSDictionary,
-//                        let deviceStateUid = result["deviceStateUid"] as? String,
+                        //                        let deviceStateUid = result["deviceStateUid"] as? String,
                         let deviceUid = result["deviceUid"] as? String,
                         let unique_id = result["unique_id"] as? String,
                         let modelNo = result["modelNo"] as? String,
@@ -160,7 +261,7 @@ extension ViewController {
                         let F_speed = result["F_speed"] as? String
                             
                             
-                        
+                            
                     {
                         
                         let saveDeviceStateList = DeviceState(context: self.managedObjextContext)
@@ -188,12 +289,12 @@ extension ViewController {
                         //-------------------------------------------------------
                         
                         let Separate_Config_Dim = config_dim.map(String.init)
-                       
+                        
                         for seprate_config_dim in Separate_Config_Dim {
                             config_dim_array.append(seprate_config_dim)
                         }
                         //-------------------------------------------------------
-                       
+                        
                         let Separate_Config_Button = config_buttons.map(String.init)
                         
                         for separate_config_button in Separate_Config_Button {
@@ -235,7 +336,7 @@ extension ViewController {
                         
                         else if F_state == "1" {
                             f_state_array.append(F_state)
-                           }
+                        }
                         
                         else {
                             let Separate_F_State = F_state.map(String.init)
@@ -245,9 +346,9 @@ extension ViewController {
                             }
                             
                         }
-//                        final_array.append(contentsOf: f_state_array)
-//                        dest_button_array.append(contentsOf: f_state_array)
-//                        config_button_array.append(contentsOf: f_state_array)
+                        //                        final_array.append(contentsOf: f_state_array)
+                        //                        dest_button_array.append(contentsOf: f_state_array)
+                        //                        config_button_array.append(contentsOf: f_state_array)
                         
                         
                         
@@ -302,9 +403,9 @@ extension ViewController {
         
         cell.master_value = final_array.last
         
-//        let size = final_array.count
-//        cell.fan_value = final_array[size-3]
-//
+        //        let size = final_array.count
+        //        cell.fan_value = final_array[size-3]
+        //
         
         if cell.master_value == "1" {
             cell.initial_values_label.isHidden = true
@@ -313,8 +414,8 @@ extension ViewController {
             cell.config_button_image.image = UIImage(named: "master")
         }
         
-    
-       
+        
+        
         
         
         
@@ -334,12 +435,12 @@ extension ViewController {
             
         }
         
-
         
-        // == CONFIG BUTTON WHAT IMAGE IS ( LIGHT, DOOR, CURTAINS )
+        
+//         == CONFIG BUTTON WHAT IMAGE IS ( LIGHT, DOOR, CURTAINS, MASTER... ) ==
         
         if cell.config_button_value == "L" {
-           
+            
             cell.on_off_image.isHidden = false
             cell.initial_values_label.isHidden = false
             cell.light_number.isHidden = false
@@ -372,4 +473,99 @@ extension ViewController {
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+    }
+    
 }
+
+
+
+extension ViewController {
+    
+    
+    func Post_Device_State() {
+        
+        let post_device_state_parameters : Parameters = [
+            
+            "deviceUid": "DEVICE_UId-9ya6hviZJ",
+            "unique_id":"SKSL_1xGLn8",
+            "POP":"null",
+            "modelNo":"87010",
+            "deviceType":"Switch Box",
+            "ack":"fatch_all",
+            "dest_button":"123456",
+            "fan_dest":"1",
+            "config_dim":"111111",
+            "config_buttons":"LLLLLL",
+            "working_mode":"none_replica",
+            "child_lock_l":"000000",
+            "child_lock_f":"000000",
+            "child_lock_m":"0",
+            "master":"1",
+            "L_state": value,
+            "L_speed":"000000",
+            "F_state":"1",
+            "F_speed":"3"
+            
+        ]
+        
+        
+        AF.request("http://3.7.18.55:3000/skroman/devicestate", method: .post, parameters: post_device_state_parameters, encoding: JSONEncoding.default, headers:  nil).response { response in
+            
+            
+            switch response.result {
+                
+            case .success(let data):
+                
+                
+                do {
+                    
+                    
+                    let jsonOne = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                    
+                    if let parseJson = jsonOne,
+                       
+                        let msg = parseJson["msg"] as? String,
+                       let L_state = parseJson["L_state"] as? String
+                    {
+                        
+                        let separate = L_state.map(String.init)
+                        
+                        for Separate_L_State in separate {
+                            
+                            self.array.append(Separate_L_State)
+                            
+                        }
+                        
+                        
+                        print(msg)
+                        print(L_state)
+                        
+                    }
+                    
+                    self.OnecollectionView.reloadData()
+                    
+                    
+                }
+                
+                
+                catch {
+                    
+                    print("catch error")
+                }
+                
+            case .failure(_):
+                print("case error")
+            }
+            
+            
+        }
+        
+        
+    }
+}
+
+
